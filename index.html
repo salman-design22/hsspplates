@@ -3,289 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HSRP Portal</title>
-
+<title>BOOK-MY-HSRP</title>
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI, Arial, sans-serif;
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
+body{background:#ececec}
+
+.top-header{background:#d9dde3;padding:12px 0;border-bottom:1px solid #d0d0d0}
+.plate-logo{
+ width:max-content;margin-left:55px;background:#f5f5f5;border:5px solid #2b2525;
+ border-radius:4px;padding:10px 28px;font-size:34px;font-weight:900;color:#222;
+ letter-spacing:1px;position:relative;box-shadow:0 2px 8px rgba(0,0,0,.25)
+}
+.plate-logo:before{
+ content:"";position:absolute;width:8px;height:8px;background:#2b2525;border-radius:50%;
+ top:10px;left:10px;
+ box-shadow:0 36px 0 #2b2525,296px 0 0 #2b2525,296px 36px 0 #2b2525;
 }
 
-body{
-    background:#ececec;
-}
-
-.container{
-    width:96%;
-    margin:20px auto;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:25px;
-}
-
-.card{
-    border-radius:8px;
-    padding:30px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-}
-
-.yellow{
-    background:#e8d98d;
-    color:#001b4d;
-}
-
-.blue{
-    background:#3f58a8;
-    color:white;
-}
-
-.tall{
-    min-height:540px;
-}
-
-.normal{
-    min-height:250px;
-}
-
-.card h2{
-    font-size:24px;
-    line-height:1.3;
-    font-weight:700;
-}
+.container{width:96%;margin:20px auto}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:25px}
+.card{border-radius:8px;padding:30px;display:flex;flex-direction:column;justify-content:space-between}
+.yellow{background:#e8d98d;color:#001b4d}
+.blue{background:#3f58a8;color:#fff}
+.tall{min-height:540px}
+.normal{min-height:250px}
+.card h2{font-size:24px;line-height:1.3;font-weight:700}
 
 .btn{
-    text-decoration:none;
-    padding:15px 28px;
-    border-radius:10px;
-    font-size:18px;
-    font-weight:600;
-    display:inline-block;
-    text-align:center;
-    transition:.3s;
+ text-decoration:none;padding:15px 28px;border-radius:10px;font-size:18px;
+ font-weight:600;display:inline-block;text-align:center;transition:.3s
 }
+.yellow .btn{border:2px solid #001b4d;color:#001b4d}
+.blue .btn{border:2px solid #fff;color:#fff}
+.btn:hover{transform:translateY(-2px)}
 
-.yellow .btn{
-    border:2px solid #001b4d;
-    color:#001b4d;
-}
-
-.blue .btn{
-    border:2px solid #fff;
-    color:#fff;
-}
-
-.btn:hover{
-    transform:translateY(-2px);
-}
-
-.footer-logos{
-    background:#f8f8f8;
-    padding:25px 15px;
-    margin-top:25px;
-}
-
+.footer-logos{background:#f8f8f8;padding:25px 15px;margin-top:25px}
 .logo-row{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:30px;
-    font-size:16px;
-    font-weight:700;
-    color:#3f58a8;
-    text-align:center;
+ display:flex;justify-content:center;flex-wrap:wrap;gap:30px;
+ font-size:16px;font-weight:700;color:#3f58a8;text-align:center
 }
 
-.footer{
-    background:#3f58a8;
-    padding:20px;
-}
-
+.footer{background:#3f58a8;padding:20px}
 .footer-links{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:20px;
+ display:flex;justify-content:center;flex-wrap:wrap;gap:20px
 }
+.footer-links a{color:white;text-decoration:none;font-size:15px}
 
-.footer-links a{
-    color:white;
-    text-decoration:none;
-    font-size:15px;
-}
-
-.footer-links a:hover{
-    text-decoration:underline;
-}
-
-/* Mobile Responsive */
 @media(max-width:1024px){
-    .grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .tall{
-        min-height:300px;
-    }
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .tall{min-height:300px}
 }
 
 @media(max-width:768px){
-
-    .container{
-        width:100%;
-        padding:12px;
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-        gap:15px;
-    }
-
-    .card{
-        min-height:auto !important;
-        padding:25px;
-    }
-
-    .card h2{
-        font-size:22px;
-    }
-
-    .btn{
-        width:100%;
-        margin-top:20px;
-    }
-
-    .logo-row{
-        flex-direction:column;
-        gap:10px;
-        font-size:14px;
-    }
-
-    .footer-links{
-        flex-direction:column;
-        text-align:center;
-        gap:12px;
-    }
+ .top-header{padding:10px}
+ .plate-logo{margin:auto;font-size:22px;padding:10px 18px}
+ .plate-logo:before{
+  box-shadow:0 26px 0 #2b2525,190px 0 0 #2b2525,190px 26px 0 #2b2525;
+ }
+ .container{width:100%;padding:12px}
+ .grid{grid-template-columns:1fr;gap:15px}
+ .card{min-height:auto!important;padding:25px}
+ .card h2{font-size:22px}
+ .btn{width:100%;margin-top:20px}
+ .logo-row{flex-direction:column;gap:10px;font-size:14px}
+ .footer-links{flex-direction:column;text-align:center;gap:12px}
 }
 </style>
 </head>
 <body>
 
-<div class="container">
+<header class="top-header">
+ <div class="plate-logo">BOOK-MY-HSRP</div>
+</header>
 
+<div class="container">
 <div class="grid">
 
-    <div class="card yellow tall">
-        <h2>High Security Registration Plate with Colour Sticker</h2>
-
-        <a href="https://cutt.ly/hsp-new"
-           target="_blank"
-           class="btn">
-           Book →
-        </a>
-    </div>
-
-    <div class="card blue normal">
-        <h2>Replacement / Retain / Transfer</h2>
-
-        <a href="https://cutt.ly/hsp-new"
-           target="_blank"
-           class="btn">
-           Book →
-        </a>
-    </div>
-
-    <div class="card yellow normal">
-        <h2>High Security Registration Plate For Electric Vehicle</h2>
-
-        <a href="https://cutt.ly/hsp-new"
-           target="_blank"
-           class="btn">
-           Book →
-        </a>
-    </div>
-
-    <div class="card blue normal">
-        <h2>Track Your Order</h2>
-
-        <a href="https://cutt.ly/hsp-new"
-           target="_blank"
-           class="btn">
-           Track →
-        </a>
-    </div>
-
-    <div class="card yellow normal">
-        <h2>Only Colour Sticker</h2>
-
-        <a href="https://cutt.ly/hsp-new"
-           target="_blank"
-           class="btn">
-           Book →
-        </a>
-    </div>
-
-    <div class="card blue normal">
-        <h2>High Security Registration Plate For Tractor & Trailer</h2>
-
-        <a href="https://cutt.ly/hsp-new"
-           target="_blank"
-           class="btn">
-           Book →
-        </a>
-    </div>
-
-    <div class="card yellow normal">
-        <h2>Grievance Redressal</h2>
-
-        <a href="https://cutt.ly/hsp-new"
-           target="_blank"
-           class="btn">
-           Enquiry →
-        </a>
-    </div>
-
+<div class="card yellow tall">
+<h2>High Security Registration Plate with Colour Sticker</h2>
+<a href="https://cutt.ly/hsp-new" target="_blank" class="btn">Book →</a>
 </div>
 
+<div class="card blue normal">
+<h2>Replacement / Retain / Transfer</h2>
+<a href="https://cutt.ly/hsp-new" target="_blank" class="btn">Book →</a>
+</div>
+
+<div class="card yellow normal">
+<h2>High Security Registration Plate For Electric Vehicle</h2>
+<a href="https://cutt.ly/hsp-new" target="_blank" class="btn">Book →</a>
+</div>
+
+<div class="card blue normal">
+<h2>Track Your Order</h2>
+<a href="https://cutt.ly/hsp-new" target="_blank" class="btn">Track →</a>
+</div>
+
+<div class="card yellow normal">
+<h2>Only Colour Sticker</h2>
+<a href="https://cutt.ly/hsp-new" target="_blank" class="btn">Book →</a>
+</div>
+
+<div class="card blue normal">
+<h2>High Security Registration Plate For Tractor & Trailer</h2>
+<a href="https://cutt.ly/hsp-new" target="_blank" class="btn">Book →</a>
+</div>
+
+<div class="card yellow normal">
+<h2>Grievance Redressal</h2>
+<a href="https://cutt.ly/hsp-new" target="_blank" class="btn">Enquiry →</a>
+</div>
+
+</div>
 </div>
 
 <div class="footer-logos">
-    <div class="logo-row">
-        <span>ROSMERTA Technologies Limited</span>
-        <span>SENSORISE</span>
-        <span>RAASTA</span>
-        <span>ROSMERTA Digital Services</span>
-        <span>ROSBLU</span>
-        <span>ROSMERTA Recycling</span>
-    </div>
+<div class="logo-row">
+<span>ROSMERTA Technologies Limited</span>
+<span>SENSORISE</span>
+<span>RAASTA</span>
+<span>ROSMERTA Digital Services</span>
+<span>ROSBLU</span>
+<span>ROSMERTA Recycling</span>
+</div>
 </div>
 
 <div class="footer">
-    <div class="footer-links">
-        <a href="https://hsrpnumberplate.co.in/faqs" target="_blank">FAQ</a>
-
-        <a href="https://hsrpnumberplate.co.in/aboutus" target="_blank">
-            About Us
-        </a>
-
-        <a href="https://hsrpnumberplate.co.in/ContactUs" target="_blank">
-            Contact Us
-        </a>
-
-        <a href="https://hsrpnumberplate.co.in/GovNotification" target="_blank">
-            Government Policy
-        </a>
-
-        <a href="https://hsrpnumberplate.co.in/cancelorder" target="_blank">
-            Refund & Cancellation
-        </a>
-    </div>
+<div class="footer-links">
+<a href="https://hsrpnumberplate.co.in/faqs" target="_blank">FAQ</a>
+<a href="https://hsrpnumberplate.co.in/aboutus" target="_blank">About Us</a>
+<a href="https://hsrpnumberplate.co.in/ContactUs" target="_blank">Contact Us</a>
+<a href="https://hsrpnumberplate.co.in/GovNotification" target="_blank">Government Policy</a>
+<a href="https://hsrpnumberplate.co.in/cancelorder" target="_blank">Refund & Cancellation</a>
+</div>
 </div>
 
 </body>
