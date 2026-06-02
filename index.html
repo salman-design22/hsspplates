@@ -10,7 +10,7 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: "Segoe UI", sans-serif;
+    font-family:Segoe UI, Arial, sans-serif;
 }
 
 body{
@@ -18,31 +18,31 @@ body{
 }
 
 .container{
-    width:97%;
-    margin:22px auto;
+    width:96%;
+    margin:20px auto;
 }
 
 .grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:35px;
+    gap:25px;
 }
 
 .card{
     border-radius:8px;
-    padding:28px;
+    padding:30px;
     display:flex;
     flex-direction:column;
     justify-content:space-between;
 }
 
 .yellow{
-    background:#ead98a;
+    background:#e8d98d;
     color:#001b4d;
 }
 
 .blue{
-    background:#3e56a6;
+    background:#3f58a8;
     color:white;
 }
 
@@ -51,24 +51,24 @@ body{
 }
 
 .normal{
-    min-height:220px;
+    min-height:250px;
 }
 
 .card h2{
-    font-size:26px;
-    line-height:1.25;
+    font-size:24px;
+    line-height:1.3;
     font-weight:700;
-    max-width:320px;
 }
 
 .btn{
-    align-self:center;
     text-decoration:none;
-    font-size:20px;
-    font-weight:600;
-    padding:16px 28px;
+    padding:15px 28px;
     border-radius:10px;
-    transition:.25s;
+    font-size:18px;
+    font-weight:600;
+    display:inline-block;
+    text-align:center;
+    transition:.3s;
 }
 
 .yellow .btn{
@@ -77,8 +77,8 @@ body{
 }
 
 .blue .btn{
-    border:2px solid white;
-    color:white;
+    border:2px solid #fff;
+    color:#fff;
 }
 
 .btn:hover{
@@ -86,40 +86,46 @@ body{
 }
 
 .footer-logos{
-    background:#f5f5f5;
-    margin-top:30px;
-    padding:25px 10px;
+    background:#f8f8f8;
+    padding:25px 15px;
+    margin-top:25px;
 }
 
 .logo-row{
     display:flex;
     justify-content:center;
-    gap:50px;
     flex-wrap:wrap;
-    font-size:18px;
+    gap:30px;
+    font-size:16px;
     font-weight:700;
-    color:#3e56a6;
+    color:#3f58a8;
+    text-align:center;
 }
 
 .footer{
-    background:#3e56a6;
-    padding:18px;
+    background:#3f58a8;
+    padding:20px;
 }
 
 .footer-links{
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
-    gap:28px;
+    gap:20px;
 }
 
 .footer-links a{
     color:white;
     text-decoration:none;
-    font-size:16px;
+    font-size:15px;
 }
 
-@media(max-width:1200px){
+.footer-links a:hover{
+    text-decoration:underline;
+}
+
+/* Mobile Responsive */
+@media(max-width:1024px){
     .grid{
         grid-template-columns:repeat(2,1fr);
     }
@@ -130,94 +136,116 @@ body{
 }
 
 @media(max-width:768px){
+
+    .container{
+        width:100%;
+        padding:12px;
+    }
+
     .grid{
         grid-template-columns:1fr;
+        gap:15px;
+    }
+
+    .card{
+        min-height:auto !important;
+        padding:25px;
+    }
+
+    .card h2{
+        font-size:22px;
+    }
+
+    .btn{
+        width:100%;
+        margin-top:20px;
+    }
+
+    .logo-row{
+        flex-direction:column;
+        gap:10px;
+        font-size:14px;
+    }
+
+    .footer-links{
+        flex-direction:column;
+        text-align:center;
+        gap:12px;
     }
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
 
 <div class="grid">
 
-    <!-- Left Large Card -->
     <div class="card yellow tall">
         <h2>High Security Registration Plate with Colour Sticker</h2>
 
         <a href="https://cutt.ly/hsp-new"
            target="_blank"
-           rel="noopener noreferrer"
            class="btn">
            Book →
         </a>
     </div>
 
-    <!-- Column 2 Top -->
     <div class="card blue normal">
-        <h2>Replacement/Retain/Transfer</h2>
+        <h2>Replacement / Retain / Transfer</h2>
 
         <a href="https://cutt.ly/hsp-new"
            target="_blank"
-           rel="noopener noreferrer"
            class="btn">
            Book →
         </a>
     </div>
 
-    <!-- Column 3 Top -->
     <div class="card yellow normal">
         <h2>High Security Registration Plate For Electric Vehicle</h2>
 
         <a href="https://cutt.ly/hsp-new"
            target="_blank"
-           rel="noopener noreferrer"
            class="btn">
            Book →
         </a>
     </div>
 
-    <!-- Column 4 Top -->
     <div class="card blue normal">
         <h2>Track Your Order</h2>
 
-        <a href="#"
+        <a href="https://cutt.ly/hsp-new"
+           target="_blank"
            class="btn">
            Track →
         </a>
     </div>
 
-    <!-- Column 2 Bottom -->
     <div class="card yellow normal">
         <h2>Only Colour Sticker</h2>
 
         <a href="https://cutt.ly/hsp-new"
            target="_blank"
-           rel="noopener noreferrer"
            class="btn">
            Book →
         </a>
     </div>
 
-    <!-- Column 3 Bottom -->
     <div class="card blue normal">
         <h2>High Security Registration Plate For Tractor & Trailer</h2>
 
         <a href="https://cutt.ly/hsp-new"
            target="_blank"
-           rel="noopener noreferrer"
            class="btn">
            Book →
         </a>
     </div>
 
-    <!-- Column 4 Bottom -->
     <div class="card yellow normal">
         <h2>Grievance Redressal</h2>
 
-        <a href="#"
+        <a href="https://cutt.ly/hsp-new"
+           target="_blank"
            class="btn">
            Enquiry →
         </a>
@@ -233,22 +261,30 @@ body{
         <span>SENSORISE</span>
         <span>RAASTA</span>
         <span>ROSMERTA Digital Services</span>
-        <span>Rosblu</span>
+        <span>ROSBLU</span>
         <span>ROSMERTA Recycling</span>
     </div>
 </div>
 
 <div class="footer">
     <div class="footer-links">
-        <a href="#">FAQ</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Refund & Cancellation Policy</a>
-        <a href="#">Safe & Secure Transaction</a>
-        <a href="#">Terms & Conditions</a>
-        <a href="#">Government Notifications</a>
-        <a href="#">About HSRP</a>
-        <a href="#">Grievance Redressal</a>
-        <a href="#">Reprint Receipt</a>
+        <a href="https://hsrpnumberplate.co.in/faqs" target="_blank">FAQ</a>
+
+        <a href="https://hsrpnumberplate.co.in/aboutus" target="_blank">
+            About Us
+        </a>
+
+        <a href="https://hsrpnumberplate.co.in/ContactUs" target="_blank">
+            Contact Us
+        </a>
+
+        <a href="https://hsrpnumberplate.co.in/GovNotification" target="_blank">
+            Government Policy
+        </a>
+
+        <a href="https://hsrpnumberplate.co.in/cancelorder" target="_blank">
+            Refund & Cancellation
+        </a>
     </div>
 </div>
 
