@@ -1,98 +1,75 @@
-import React, { useState } from 'react';
-import { ArrowRight, CheckCircle, Truck, User, CreditCard, Menu, X, FileText, XCircle, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowRight, CheckCircle, Truck, User, CreditCard, Menu, X, ShieldCheck, MapPin, Mail, Phone, ChevronRight } from 'lucide-react';
 
 const App = () => {
   const [view, setView] = useState('home');
   const [bookingStep, setBookingStep] = useState(1);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [cancelStatus, setCancelStatus] = useState('form'); // 'form' | 'success'
+  const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [qrKey, setQrKey] = useState(Math.random());
 
-  const states = [
-    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", 
-    "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", 
-    "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", 
-    "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", 
-    "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", 
-    "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", 
-    "Lakshadweep", "Puducherry"
+  const states = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi"];
+
+  const navLinks = [
+    { name: 'Home', view: 'home' },
+    { name: 'About Us', view: 'about' },
+    { name: 'Notifications', view: 'notifications' },
+    { name: 'FAQs', view: 'faqs' },
+    { name: 'Contact Us', view: 'contact' },
+    { name: 'Cancel Order', view: 'cancel' }
   ];
 
   const Header = () => (
     <header className="py-4 border-b bg-white sticky top-0 z-50">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('home')}>
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => {setView('home'); setIsMobileMenuOpen(false)}}>
           <div className="bg-blue-800 text-white p-2 rounded font-bold">H</div>
           <div>
             <h1 className="font-bold text-lg leading-tight">HSRP</h1>
             <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">BOOKING PORTAL</span>
           </div>
         </div>
-
         <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-600">
-          {['home', 'about', 'notifications', 'faqs', 'contact', 'cancel'].map((item) => (
-            <button key={item} onClick={() => setView(item)} className="hover:text-blue-600 capitalize">{item.replace('-', ' ')}</button>
+          {navLinks.map((link) => (
+            <button key={link.view} onClick={() => setView(link.view)} className="hover:text-blue-600">{link.name}</button>
           ))}
         </nav>
-
         <button className="md:hidden p-2" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
           {isMobileMenuOpen ? <X /> : <Menu />}
         </button>
       </div>
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute w-full bg-white border-b p-4 flex flex-col gap-4">
-          {['home', 'about', 'notifications', 'faqs', 'contact', 'cancel'].map((item) => (
-            <button key={item} onClick={() => {setView(item); setIsMobileMenuOpen(false);}} className="text-left font-medium capitalize">{item.replace('-', ' ')}</button>
+        <nav className="md:hidden bg-white border-t p-4 flex flex-col gap-4">
+          {navLinks.map((link) => (
+            <button key={link.view} onClick={() => {setView(link.view); setIsMobileMenuOpen(false)}} className="hover:text-blue-600 text-left">{link.name}</button>
           ))}
-        </div>
+        </nav>
       )}
     </header>
   );
 
-  const CancelOrderPage = () => (
-    <div className="container mx-auto max-w-xl px-4 py-12">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center">
-            {cancelStatus === 'form' ? (
-                <>
-                    <XCircle size={48} className="text-red-500 mx-auto mb-4" />
-                    <h2 className="text-2xl font-bold mb-2">Cancel Your Order</h2>
-                    <p className="text-gray-500 mb-8">Please provide your details to initiate the cancellation process.</p>
-                    <form onSubmit={(e) => { e.preventDefault(); setCancelStatus('success'); }} className="space-y-4 text-left">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div><label className="block text-sm font-medium mb-1">REGISTRATION NUMBER</label><input required type="text" placeholder="DL01AB1234" className="w-full p-3 border rounded-xl" /></div>
-                            <div><label className="block text-sm font-medium mb-1">REFERENCE ID</label><input required type="text" placeholder="HSRP-123456" className="w-full p-3 border rounded-xl" /></div>
-                        </div>
-                        <div><label className="block text-sm font-medium mb-1">CONTACT NUMBER</label><input required type="tel" placeholder="Enter linked mobile number" className="w-full p-3 border rounded-xl" /></div>
-                        <div>
-                            <label className="block text-sm font-medium mb-1">REASON FOR CANCELLATION</label>
-                            <select required className="w-full p-3 border rounded-xl">
-                                <option value="">Select a reason</option>
-                                <option>Wrong vehicle specifications entered</option>
-                                <option>Incorrect owner name or phone number</option>
-                                <option>Planning to sell my vehicle shortly</option>
-                                <option>Delayed dispatch schedule</option>
-                                <option>Other reasons / Personal decision</option>
-                            </select>
-                        </div>
-                        <button type="submit" className="w-full bg-red-600 text-white py-4 rounded-xl font-bold mt-4">Submit Request</button>
-                    </form>
-                </>
-            ) : (
-                <>
-                    <CheckCircle size={64} className="text-green-500 mx-auto mb-4" />
-                    <h2 className="text-2xl font-bold mb-6">Cancellation Registered!</h2>
-                    <div className="bg-gray-50 p-6 rounded-xl border text-sm text-left mb-6">
-                        <p className="font-bold mb-1">ENGLISH NOTICE:</p>
-                        <p className="text-gray-600 mb-4">Your request has been successfully registered. Our customer support executive will call you within 24 hours to confirm, and then your order will be cancelled successfully.</p>
-                        <p className="font-bold mb-1 text-blue-900">हिंदी सूचना:</p>
-                        <p className="text-gray-600">आपकी रद्द करने की रिक्वेस्ट दर्ज कर ली गई है। हमारा कस्टमर सपोर्ट एग्जीक्यूटिव 24 घंटे के अंदर पुष्टि करने के लिए आपको कॉल करेगा, उसके बाद ही आपका ऑर्डर सफलतापूर्वक कैंसिल किया जाएगा।</p>
-                    </div>
-                    <button onClick={() => {setCancelStatus('form'); setView('home')}} className="w-full bg-black text-white py-4 rounded-xl font-bold">Cancel Another Order</button>
-                    <button onClick={() => {setCancelStatus('form'); setView('home')}} className="w-full text-blue-600 font-bold mt-4">Return to Homepage</button>
-                </>
-            )}
-        </div>
-    </div>
+  const Footer = () => (
+    <footer className="py-8 bg-gray-100 border-t mt-12 text-center text-sm text-gray-500">
+      <div className="container mx-auto px-4 mb-4 flex flex-wrap justify-center gap-6">
+        {navLinks.map((link) => (
+          <button key={link.view} onClick={() => setView(link.view)} className="hover:text-blue-600">{link.name}</button>
+        ))}
+      </div>
+      <p>© 2026 High Security Registration Plate (HSRP) Portal. Fully Mocked Compliance Simulator.</p>
+    </footer>
   );
+
+  const DynamicQR = () => {
+    // Generates a random pattern to simulate a fresh QR code every time
+    const pattern = Array.from({ length: 25 }, () => Math.random() > 0.5 ? '#000' : '#fff');
+    return (
+      <svg width="150" height="150" viewBox="0 0 5 5" className="border-4 border-gray-200">
+        {pattern.map((color, i) => (
+          <rect key={i} x={i % 5} y={Math.floor(i / 5)} width="1" height="1" fill={color} />
+        ))}
+      </svg>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -110,9 +87,9 @@ const App = () => {
                 { title: "Track Your Order", bg: "bg-blue-900", text: "text-white" },
                 { title: "Grievance Redressal", bg: "bg-gray-800", text: "text-white" }
               ].map((card, i) => (
-                <div key={i} className={`p-6 rounded-xl shadow-lg ${card.bg} ${card.text || 'text-black'} flex flex-col justify-between h-48`}>
+                <div key={i} className={`p-6 rounded-xl shadow-lg ${card.bg} ${card.text || 'text-black'} flex flex-col justify-between h-48 transition hover:opacity-90`}>
                   <h3 className="text-lg font-bold">{card.title}</h3>
-                  <button onClick={() => {setBookingStep(1); setView('booking')}} className="bg-white text-black px-4 py-2 rounded-lg font-semibold flex items-center gap-2 w-max text-sm">
+                  <button onClick={() => {setBookingStep(1); setView('booking'); setQrKey(Math.random())}} className="bg-white text-black px-4 py-2 rounded-lg font-semibold flex items-center gap-2 w-max text-sm">
                     {card.title.includes('Track') ? 'Track' : 'Book'} <ArrowRight size={16} />
                   </button>
                 </div>
@@ -120,6 +97,7 @@ const App = () => {
             </div>
           </div>
         )}
+
         {view === 'booking' && (
             <div className="container mx-auto max-w-2xl px-4 py-8">
                 <div className="py-8 flex justify-center gap-4 text-center overflow-x-auto">
@@ -139,15 +117,16 @@ const App = () => {
                             <input required type="text" placeholder="E.G. DL01AB1234" className="w-full p-4 border rounded-xl" />
                             <label className="block text-sm font-medium">VEHICLE CLASS *</label>
                             <select required className="w-full p-4 border rounded-xl">
-                                <option value="">-- Choose Vehicle Class --</option>
+                                <option value="">-- Select Vehicle Class --</option>
                                 <option>Two Wheeler</option>
                                 <option>Four Wheeler (Car/SUV)</option>
                                 <option>Commercial Vehicle (Truck/Bus/Cab)</option>
                                 <option>Electric Vehicle</option>
+                                <option>Tractor & Trailer</option>
                             </select>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div><label className="block text-sm font-medium">CHASSIS NO *</label><input required type="text" className="w-full p-4 border rounded-xl" /></div>
-                                <div><label className="block text-sm font-medium">ENGINE NO *</label><input required type="text" className="w-full p-4 border rounded-xl" /></div>
+                                <div><label className="block text-sm font-medium">CHASSIS NO (LAST 5 DIGITS) *</label><input required type="text" maxLength="5" className="w-full p-4 border rounded-xl" /></div>
+                                <div><label className="block text-sm font-medium">ENGINE NO (LAST 5 DIGITS) *</label><input required type="text" maxLength="5" className="w-full p-4 border rounded-xl" /></div>
                             </div>
                             <button type="submit" className="w-full bg-blue-700 text-white py-4 rounded-xl font-bold">Continue & Configure Details</button>
                         </form>
@@ -155,10 +134,13 @@ const App = () => {
                     {bookingStep === 2 && (
                         <form onSubmit={(e) => { e.preventDefault(); setBookingStep(3); }} className="space-y-4">
                             <h2 className="text-xl font-bold flex items-center gap-2"><User /> Delivery & Owner Details</h2>
-                            <input required type="text" placeholder="Full Name" className="w-full p-4 border rounded-xl" />
+                            <input required type="text" placeholder="Full Owner Name (As per RC)" className="w-full p-4 border rounded-xl" />
                             <input required type="email" placeholder="Email Address" className="w-full p-4 border rounded-xl" />
                             <input required type="tel" placeholder="Mobile Number" className="w-full p-4 border rounded-xl" />
-                            <select required className="w-full p-4 border rounded-xl">{states.map(s => <option key={s}>{s}</option>)}</select>
+                            <select required className="w-full p-4 border rounded-xl">
+                                <option value="">-- Select State / Union Territory --</option>
+                                {states.map(s => <option key={s}>{s}</option>)}
+                            </select>
                             <textarea required placeholder="Complete Delivery Address" className="w-full p-4 border rounded-xl" rows="3"></textarea>
                             <div className="flex gap-4">
                                 <button type="button" onClick={() => setBookingStep(1)} className="flex-1 border-2 py-4 rounded-xl font-bold">Back</button>
@@ -169,7 +151,9 @@ const App = () => {
                     {bookingStep === 3 && (
                         <form onSubmit={(e) => { e.preventDefault(); setBookingStep(4); }} className="text-center space-y-6">
                             <h2 className="text-xl font-bold flex items-center justify-center gap-2"><CreditCard /> Secure Scan & Pay</h2>
-                            <div className="bg-gray-200 w-48 h-48 mx-auto flex items-center justify-center font-bold text-gray-500 rounded-lg">QR CODE</div>
+                            <div key={qrKey} className="bg-gray-100 p-6 border-2 border-dashed w-48 h-48 mx-auto flex items-center justify-center font-bold text-gray-500 rounded-lg">
+                                <DynamicQR />
+                            </div>
                             <p className="font-bold text-xl">₹1395</p>
                             <input required type="text" placeholder="Enter Transaction ID / UTR" className="w-full p-4 border rounded-xl text-center" />
                             <button type="submit" className="w-full bg-green-600 text-white py-4 rounded-xl font-bold">Verify Transaction</button>
@@ -183,9 +167,9 @@ const App = () => {
                                 <div className="flex justify-between border-b pb-2"><span>Reference ID</span> <span className="font-bold text-blue-600">HSR-951495</span></div>
                             </div>
                             <div className="text-left space-y-2">
-                                <p className="font-bold text-sm">ESTIMATED DISPATCH PIPELINE</p>
-                                <div className="flex gap-2 items-start"><div className="w-3 h-3 rounded-full bg-blue-600 mt-1"></div> <div><p>UTR / Payment Verification</p></div></div>
-                                <div className="flex gap-2 items-start"><div className="w-3 h-3 rounded-full bg-gray-300 mt-1"></div> <div><p>Government Data Approval</p></div></div>
+                                <p className="font-bold text-sm text-gray-500">ESTIMATED DISPATCH PIPELINE</p>
+                                <div className="flex gap-2 items-start"><div className="w-3 h-3 rounded-full bg-blue-600 mt-1"></div> <div><p>UTR / Payment Verification</p><p className="text-xs text-gray-400">Pending validation (ETA: 2-4 Hours).</p></div></div>
+                                <div className="flex gap-2 items-start"><div className="w-3 h-3 rounded-full bg-gray-300 mt-1"></div> <div><p>Government Data Approval</p><p className="text-xs text-gray-400">Processing of custom plate printing authorization.</p></div></div>
                                 <div className="flex gap-2 items-start"><div className="w-3 h-3 rounded-full bg-gray-300 mt-1"></div> <div><p>Dispatch & Home Installation</p><p className="text-xs text-gray-400">ETA: 5-7 WORKING DAYS.</p></div></div>
                             </div>
                             <button type="button" onClick={() => {setView('home'); setBookingStep(1)}} className="w-full bg-black text-white py-4 rounded-xl font-bold">Book Another Plate</button>
@@ -194,19 +178,109 @@ const App = () => {
                 </div>
             </div>
         )}
-        {view === 'cancel' && <CancelOrderPage />}
-        {['about', 'notifications', 'faqs', 'contact'].includes(view) && (
-            <div className="container mx-auto max-w-3xl px-4 py-8">
-                <h2 className="text-2xl font-bold mb-6 capitalize">{view.replace('-', ' ')}</h2>
-                <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 prose">
-                    {view === 'about' && <p>HSRP Booking Portal is dedicated to streamlining the registration process for high-security plates across India.</p>}
-                    {view === 'faqs' && <p>Find answers to common questions about HSRP installation, tracking, and delivery timelines.</p>}
-                    {view === 'contact' && <p>Reach out to our support team for any queries regarding your order or delivery.</p>}
-                    {view === 'notifications' && <p>Stay updated with the latest alerts regarding your government HSRP registration status.</p>}
+
+        {view === 'about' && (
+            <div className="container mx-auto max-w-4xl px-4 py-12">
+                <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
+                    <h2 className="text-3xl font-bold mb-6 text-center">About High Security Registration Plates</h2>
+                    <p className="text-gray-600 mb-8">High Security Registration Plates (HSRP) are government-mandated registration plates crafted from high-quality aluminum, equipped with unique anti-tampering security parameters designed to minimize automobile-related fraud and crime.</p>
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <div className="p-4 bg-gray-50 rounded-xl border"><strong>Chromium Hologram</strong><p className="text-sm text-gray-500">Hot-stamped chromium emblem featuring the Ashoka Chakra.</p></div>
+                        <div className="p-4 bg-gray-50 rounded-xl border"><strong>Unique Laser Serial Number</strong><p className="text-sm text-gray-500">10-digit PIN laser engraved for tracking.</p></div>
+                        <div className="p-4 bg-gray-50 rounded-xl border"><strong>Snap Lock Seals</strong><p className="text-sm text-gray-500">Non-reusable snap locks preventing malicious removal.</p></div>
+                        <div className="p-4 bg-gray-50 rounded-xl border"><strong>Reflective Sheeting</strong><p className="text-sm text-gray-500">Retro-reflective sheets for visibility.</p></div>
+                    </div>
+                </div>
+            </div>
+        )}
+
+        {view === 'notifications' && (
+            <div className="container mx-auto max-w-4xl px-4 py-12">
+                <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
+                    <h2 className="text-3xl font-bold mb-6 text-center">Official Government Notifications</h2>
+                    <div className="space-y-4">
+                        <div className="p-4 border-l-4 border-blue-600 bg-gray-50 rounded"><strong>Mandatory Compliance Order</strong><p className="text-sm">Failure to mount HSRP on registered vehicles attracts penalties.</p></div>
+                        <div className="p-4 border-l-4 border-orange-500 bg-gray-50 rounded"><strong>State Enforcement Actions</strong><p className="text-sm">Active verification drives are being launched continuously.</p></div>
+                    </div>
+                </div>
+            </div>
+        )}
+
+        {view === 'faqs' && (
+            <div className="container mx-auto max-w-4xl px-4 py-12">
+                <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
+                    <h2 className="text-3xl font-bold mb-6 text-center">Frequently Asked Questions</h2>
+                    {['Is HSRP mandatory for my older vehicles?', 'How long does delivery and verification process take?', 'What if I submit wrong Engine or Chassis number?'].map((q, i) => (
+                        <details key={i} className="mb-4 bg-gray-50 p-4 rounded-xl border">
+                            <summary className="font-bold cursor-pointer">{q}</summary>
+                            <p className="mt-2 text-sm text-gray-600">Yes, it is mandatory as per government guidelines. Please visit our office or contact us for more information on your specific vehicle category.</p>
+                        </details>
+                    ))}
+                </div>
+            </div>
+        )}
+
+        {view === 'contact' && (
+            <div className="container mx-auto max-w-4xl px-4 py-12">
+                <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
+                    <h2 className="text-3xl font-bold mb-6 text-center">Get In Touch</h2>
+                    {contactSubmitted ? (
+                        <div className="text-center py-12 bg-green-50 rounded-2xl border border-green-200">
+                            <CheckCircle size={64} className="text-green-600 mx-auto mb-4" />
+                            <h3 className="text-xl font-bold text-green-800">Your message has been successfully sent.</h3>
+                            <p className="text-green-700">Our customer support executive will contact you in 24 hours.</p>
+                        </div>
+                    ) : (
+                        <form onSubmit={(e) => { e.preventDefault(); setContactSubmitted(true); }} className="space-y-4">
+                            <input required type="text" placeholder="Full Name" className="w-full p-4 border rounded-xl" />
+                            <div className="grid grid-cols-2 gap-4">
+                                <input required type="email" placeholder="Email Address" className="w-full p-4 border rounded-xl" />
+                                <input required type="tel" placeholder="Mobile Number" className="w-full p-4 border rounded-xl" />
+                            </div>
+                            <textarea required placeholder="Describe your query here..." className="w-full p-4 border rounded-xl" rows="4"></textarea>
+                            <button type="submit" className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold">Send Message</button>
+                        </form>
+                    )}
+                </div>
+            </div>
+        )}
+
+        {view === 'cancel' && (
+            <div className="container mx-auto max-w-xl px-4 py-12">
+                <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center">
+                    <h2 className="text-2xl font-bold mb-8">Cancel Your Order</h2>
+                    <form onSubmit={(e) => { e.preventDefault(); setView('cancel-success'); }} className="space-y-4 text-left">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div><label className="block text-sm font-medium mb-1">REGISTRATION NUMBER</label><input required type="text" className="w-full p-3 border rounded-xl" /></div>
+                            <div><label className="block text-sm font-medium mb-1">REFERENCE ID</label><input required type="text" className="w-full p-3 border rounded-xl" /></div>
+                        </div>
+                        <div><label className="block text-sm font-medium mb-1">CONTACT NUMBER</label><input required type="tel" className="w-full p-3 border rounded-xl" /></div>
+                        <select required className="w-full p-3 border rounded-xl">
+                            <option value="">Select a reason</option>
+                            <option>Wrong vehicle specifications entered</option>
+                            <option>Incorrect owner name or phone number</option>
+                            <option>Planning to sell my vehicle shortly</option>
+                            <option>Delayed dispatch schedule</option>
+                            <option>Other reasons / Personal decision</option>
+                        </select>
+                        <button type="submit" className="w-full bg-red-600 text-white py-4 rounded-xl font-bold mt-4">Submit Request</button>
+                    </form>
+                </div>
+            </div>
+        )}
+
+        {view === 'cancel-success' && (
+            <div className="container mx-auto max-w-xl px-4 py-12">
+                <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center">
+                    <CheckCircle size={64} className="text-green-500 mx-auto mb-4" />
+                    <h2 className="text-2xl font-bold mb-6">Cancellation Registered!</h2>
+                    <p className="text-sm text-gray-600 mb-6">Your request has been successfully registered. Our support executive will call you within 24 hours to confirm.</p>
+                    <button onClick={() => setView('home')} className="w-full bg-black text-white py-4 rounded-xl font-bold">Return to Homepage</button>
                 </div>
             </div>
         )}
       </main>
+      <Footer />
     </div>
   );
 };
