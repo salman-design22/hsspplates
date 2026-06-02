@@ -37,7 +37,7 @@ const App = () => {
     setIsChatLoading(true);
 
     try {
-      const apiKey = ""; // Canvas provides this automatically
+      const apiKey = "";
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
       
       const payload = {
@@ -144,6 +144,7 @@ const App = () => {
           </div>
         )}
 
+        {}
         {view === 'booking' && (
             <div className="container mx-auto max-w-2xl px-4 py-8">
                 <div className="py-8 flex justify-center gap-4 text-center overflow-x-auto">
@@ -225,6 +226,7 @@ const App = () => {
             </div>
         )}
 
+        {}
         {view === 'about' && (
             <div className="container mx-auto max-w-4xl px-4 py-12">
                 <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
